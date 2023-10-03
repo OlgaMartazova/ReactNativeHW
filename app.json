@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "projectTitle",
-    "slug": "projectTitle",
+    "name": "ReactNativeHW",
+    "slug": "ReactNativeHW",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
