@@ -7,7 +7,7 @@ export default function TextInputFeature({ navigation }) {
         <View style={styles.container}>
             <Name />
             <NickName />
-            <Login />
+            <Login navigation={navigation}/>
         </View>
     );
 }
@@ -45,7 +45,7 @@ function NickName() {
     );
 }
 
-function Login() {
+function Login({navigation}) {
     const correctLogin = '123'
     const correctPassword = 'qwe'
     const [login, setLogin] = useState('');
@@ -90,7 +90,7 @@ function Login() {
                     />
                     <Button
                         title='Login'
-                        onPress={handleLogin}
+                        onPress={() => navigation.goBack()}
                     />
                 </>
             )

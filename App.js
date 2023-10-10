@@ -4,6 +4,8 @@ import { Button, Text, View } from "react-native";
 import ButtonFeature from "./features/ButtonFeature";
 import TextInputFeature from "./features/TextInputFeature";
 import CustomComponentsFeature from "./features/CustomComponentsFeature";
+import TodoList from "./features/TodoList";
+import CompletedList from "./features/CompletedList"
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +18,9 @@ function HomeScreen({ navigation }) {
         title="TextInput" />
         <Button onPress={() => navigation.navigate('Custom Components')}
         title="Custom Components" />
+      <Button
+        onPress={() => navigation.navigate('Todo')}
+        title='Todo list' />
     </View>
   );
 }
@@ -28,6 +33,8 @@ function App() {
         <Stack.Screen name={'Button'} component={ButtonFeature} />
         <Stack.Screen name={'TextInput'} component={TextInputFeature} />
         <Stack.Screen name={'Custom Components'} component={CustomComponentsFeature} />
+        <Stack.Screen name={'Todo'} component={TodoList} />
+        <Stack.Screen name={'Completed'} component={CompletedList} />
       </Stack.Navigator>
     </NavigationContainer>
   );
