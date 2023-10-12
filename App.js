@@ -1,43 +1,88 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Button, Text, View } from "react-native";
-import ButtonFeature from "./features/ButtonFeature";
-import TextInputFeature from "./features/TextInputFeature";
-import CustomComponentsFeature from "./features/CustomComponentsFeature";
-import TodoList from "./features/TodoList";
-import CompletedList from "./features/CompletedList"
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Button, TouchableOpacity } from "react-native";
+import SettingsScreen from "./screens/SettingsScreen";
+import ChatScreen from "./screens/ChatScreen";
+import AboutScreen from "./screens/AboutScreen";
+import HomeScreen from "./screens/HomeScreen";
+import NewsScreen from "./screens/NewsScreen";
+import { Icon } from 'react-native-elements';
+// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
+
+const homeName = 'Home'
+const newsName = 'News'
+const chatName = 'Chat'
+const settingsName = 'Settings'
+
+const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
-function HomeScreen({ navigation }) {
+const TabNavigation = () => {
   return (
-    <View>
-      <Button onPress={() => navigation.navigate('Button')}
-        title="Button" />
-      <Button onPress={() => navigation.navigate('TextInput')}
-        title="TextInput" />
-        <Button onPress={() => navigation.navigate('Custom Components')}
-        title="Custom Components" />
-      <Button
-        onPress={() => navigation.navigate('Todo')}
-        title='Todo list' />
-    </View>
+    <Tab.Navigator
+      initialRouteName={homeName}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          let rn = route.name;
+          if (rn === homeName) {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (rn === newsName) {
+            iconName = focused ? 'trending-up' : 'trending-up-outline';
+          } else if (rn === chatName) {
+            iconName = focused ? 'people-circle' : 'people-circle-outline';
+          } else if (rn === settingsName) {
+            iconName = focused ? 'settings' : 'settings-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'grey',
+      })}
+    >
+      <Tab.Screen name="Home" component={HomeStack}
+        options={{
+          headerShown: false,
+        }} />
+      <Tab.Screen name="News" component={NewsScreen} />
+      <Tab.Screen name="Chat" component={ChatScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
   );
 }
-
-function App() {
+const HomeStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name={'HomeScreen'}
+        component={HomeScreen}
+        options={(props) => ({
+          headerTitle: (props) =>
+            <Icon
+              type="ionicon"
+              name={Platform.OS === "ios" ? "ios-infinite" : "md-infinite"}
+            />,
+          headerRight: () => (
+            <Button
+              onPress={() => props.navigation.navigate('About')}
+              title="About app"
+              color="#000"
+            />)
+        })}
+      />
+      <Stack.Screen name={'About'} component={AboutScreen} initialParams={{ itemId: 42 }} />
+    </Stack.Navigator>
+  );
+}
+export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name={'Home'} component={HomeScreen} />
-        <Stack.Screen name={'Button'} component={ButtonFeature} />
-        <Stack.Screen name={'TextInput'} component={TextInputFeature} />
-        <Stack.Screen name={'Custom Components'} component={CustomComponentsFeature} />
-        <Stack.Screen name={'Todo'} component={TodoList} />
-        <Stack.Screen name={'Completed'} component={CompletedList} />
+        <Stack.Screen name={'Tab'} component={TabNavigation} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
+  )
 }
-
-export default App;
