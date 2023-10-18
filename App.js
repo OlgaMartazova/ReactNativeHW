@@ -5,7 +5,7 @@ import { Button, TouchableOpacity } from "react-native";
 import SettingsScreen from "./screens/SettingsScreen";
 import ChatScreen from "./screens/ChatScreen";
 import AboutScreen from "./screens/AboutScreen";
-import HomeScreen from "./screens/HomeScreen";
+import { HomeScreen } from "./screens/HomeScreen";
 import NewsScreen from "./screens/NewsScreen";
 import { Icon } from 'react-native-elements';
 // import Icon from "react-native-vector-icons/MaterialCommunityIcons";
